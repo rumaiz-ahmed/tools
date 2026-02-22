@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "copywriting": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "computedHash": "82f98239f6fb27c028e0339b25356c2ae4d1933689ee2d8b707f606381fc9170"
+    },
+    "tanstack-start-best-practices": {
+      "source": "deckardger/tanstack-agent-skills",
+      "sourceType": "github",
+      "computedHash": "c27c53eebac3b0d0913af4760a55f19a29d71a7e6980db6adeb62e8b9a0d0c55"
+    }
+  }
+}
