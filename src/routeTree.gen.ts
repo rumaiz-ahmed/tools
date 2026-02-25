@@ -9,38 +9,192 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ToolsWorldClockRouteImport } from './routes/tools/world-clock'
+import { Route as ToolsUrlShortenerRouteImport } from './routes/tools/url-shortener'
+import { Route as ToolsUnitConverterRouteImport } from './routes/tools/unit-converter'
+import { Route as ToolsTextToolsRouteImport } from './routes/tools/text-tools'
+import { Route as ToolsPdfToolsRouteImport } from './routes/tools/pdf-tools'
+import { Route as ToolsJsonFormatterRouteImport } from './routes/tools/json-formatter'
+import { Route as ToolsImageConverterRouteImport } from './routes/tools/image-converter'
+import { Route as ToolsDateCalculatorRouteImport } from './routes/tools/date-calculator'
+import { Route as ToolsColorConverterRouteImport } from './routes/tools/color-converter'
+import { Route as ToolsCalculatorRouteImport } from './routes/tools/calculator'
 
+const DiscoverRoute = DiscoverRouteImport.update({
+  id: '/discover',
+  path: '/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsWorldClockRoute = ToolsWorldClockRouteImport.update({
+  id: '/tools/world-clock',
+  path: '/tools/world-clock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsUrlShortenerRoute = ToolsUrlShortenerRouteImport.update({
+  id: '/tools/url-shortener',
+  path: '/tools/url-shortener',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsUnitConverterRoute = ToolsUnitConverterRouteImport.update({
+  id: '/tools/unit-converter',
+  path: '/tools/unit-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsTextToolsRoute = ToolsTextToolsRouteImport.update({
+  id: '/tools/text-tools',
+  path: '/tools/text-tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsPdfToolsRoute = ToolsPdfToolsRouteImport.update({
+  id: '/tools/pdf-tools',
+  path: '/tools/pdf-tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
+  id: '/tools/json-formatter',
+  path: '/tools/json-formatter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsImageConverterRoute = ToolsImageConverterRouteImport.update({
+  id: '/tools/image-converter',
+  path: '/tools/image-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsDateCalculatorRoute = ToolsDateCalculatorRouteImport.update({
+  id: '/tools/date-calculator',
+  path: '/tools/date-calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsColorConverterRoute = ToolsColorConverterRouteImport.update({
+  id: '/tools/color-converter',
+  path: '/tools/color-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCalculatorRoute = ToolsCalculatorRouteImport.update({
+  id: '/tools/calculator',
+  path: '/tools/calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/discover': typeof DiscoverRoute
+  '/tools/calculator': typeof ToolsCalculatorRoute
+  '/tools/color-converter': typeof ToolsColorConverterRoute
+  '/tools/date-calculator': typeof ToolsDateCalculatorRoute
+  '/tools/image-converter': typeof ToolsImageConverterRoute
+  '/tools/json-formatter': typeof ToolsJsonFormatterRoute
+  '/tools/pdf-tools': typeof ToolsPdfToolsRoute
+  '/tools/text-tools': typeof ToolsTextToolsRoute
+  '/tools/unit-converter': typeof ToolsUnitConverterRoute
+  '/tools/url-shortener': typeof ToolsUrlShortenerRoute
+  '/tools/world-clock': typeof ToolsWorldClockRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/discover': typeof DiscoverRoute
+  '/tools/calculator': typeof ToolsCalculatorRoute
+  '/tools/color-converter': typeof ToolsColorConverterRoute
+  '/tools/date-calculator': typeof ToolsDateCalculatorRoute
+  '/tools/image-converter': typeof ToolsImageConverterRoute
+  '/tools/json-formatter': typeof ToolsJsonFormatterRoute
+  '/tools/pdf-tools': typeof ToolsPdfToolsRoute
+  '/tools/text-tools': typeof ToolsTextToolsRoute
+  '/tools/unit-converter': typeof ToolsUnitConverterRoute
+  '/tools/url-shortener': typeof ToolsUrlShortenerRoute
+  '/tools/world-clock': typeof ToolsWorldClockRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/discover': typeof DiscoverRoute
+  '/tools/calculator': typeof ToolsCalculatorRoute
+  '/tools/color-converter': typeof ToolsColorConverterRoute
+  '/tools/date-calculator': typeof ToolsDateCalculatorRoute
+  '/tools/image-converter': typeof ToolsImageConverterRoute
+  '/tools/json-formatter': typeof ToolsJsonFormatterRoute
+  '/tools/pdf-tools': typeof ToolsPdfToolsRoute
+  '/tools/text-tools': typeof ToolsTextToolsRoute
+  '/tools/unit-converter': typeof ToolsUnitConverterRoute
+  '/tools/url-shortener': typeof ToolsUrlShortenerRoute
+  '/tools/world-clock': typeof ToolsWorldClockRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/discover'
+    | '/tools/calculator'
+    | '/tools/color-converter'
+    | '/tools/date-calculator'
+    | '/tools/image-converter'
+    | '/tools/json-formatter'
+    | '/tools/pdf-tools'
+    | '/tools/text-tools'
+    | '/tools/unit-converter'
+    | '/tools/url-shortener'
+    | '/tools/world-clock'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/discover'
+    | '/tools/calculator'
+    | '/tools/color-converter'
+    | '/tools/date-calculator'
+    | '/tools/image-converter'
+    | '/tools/json-formatter'
+    | '/tools/pdf-tools'
+    | '/tools/text-tools'
+    | '/tools/unit-converter'
+    | '/tools/url-shortener'
+    | '/tools/world-clock'
+  id:
+    | '__root__'
+    | '/'
+    | '/discover'
+    | '/tools/calculator'
+    | '/tools/color-converter'
+    | '/tools/date-calculator'
+    | '/tools/image-converter'
+    | '/tools/json-formatter'
+    | '/tools/pdf-tools'
+    | '/tools/text-tools'
+    | '/tools/unit-converter'
+    | '/tools/url-shortener'
+    | '/tools/world-clock'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DiscoverRoute: typeof DiscoverRoute
+  ToolsCalculatorRoute: typeof ToolsCalculatorRoute
+  ToolsColorConverterRoute: typeof ToolsColorConverterRoute
+  ToolsDateCalculatorRoute: typeof ToolsDateCalculatorRoute
+  ToolsImageConverterRoute: typeof ToolsImageConverterRoute
+  ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
+  ToolsPdfToolsRoute: typeof ToolsPdfToolsRoute
+  ToolsTextToolsRoute: typeof ToolsTextToolsRoute
+  ToolsUnitConverterRoute: typeof ToolsUnitConverterRoute
+  ToolsUrlShortenerRoute: typeof ToolsUrlShortenerRoute
+  ToolsWorldClockRoute: typeof ToolsWorldClockRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/discover': {
+      id: '/discover'
+      path: '/discover'
+      fullPath: '/discover'
+      preLoaderRoute: typeof DiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +202,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/world-clock': {
+      id: '/tools/world-clock'
+      path: '/tools/world-clock'
+      fullPath: '/tools/world-clock'
+      preLoaderRoute: typeof ToolsWorldClockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/url-shortener': {
+      id: '/tools/url-shortener'
+      path: '/tools/url-shortener'
+      fullPath: '/tools/url-shortener'
+      preLoaderRoute: typeof ToolsUrlShortenerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/unit-converter': {
+      id: '/tools/unit-converter'
+      path: '/tools/unit-converter'
+      fullPath: '/tools/unit-converter'
+      preLoaderRoute: typeof ToolsUnitConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/text-tools': {
+      id: '/tools/text-tools'
+      path: '/tools/text-tools'
+      fullPath: '/tools/text-tools'
+      preLoaderRoute: typeof ToolsTextToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/pdf-tools': {
+      id: '/tools/pdf-tools'
+      path: '/tools/pdf-tools'
+      fullPath: '/tools/pdf-tools'
+      preLoaderRoute: typeof ToolsPdfToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/json-formatter': {
+      id: '/tools/json-formatter'
+      path: '/tools/json-formatter'
+      fullPath: '/tools/json-formatter'
+      preLoaderRoute: typeof ToolsJsonFormatterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/image-converter': {
+      id: '/tools/image-converter'
+      path: '/tools/image-converter'
+      fullPath: '/tools/image-converter'
+      preLoaderRoute: typeof ToolsImageConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/date-calculator': {
+      id: '/tools/date-calculator'
+      path: '/tools/date-calculator'
+      fullPath: '/tools/date-calculator'
+      preLoaderRoute: typeof ToolsDateCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/color-converter': {
+      id: '/tools/color-converter'
+      path: '/tools/color-converter'
+      fullPath: '/tools/color-converter'
+      preLoaderRoute: typeof ToolsColorConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/calculator': {
+      id: '/tools/calculator'
+      path: '/tools/calculator'
+      fullPath: '/tools/calculator'
+      preLoaderRoute: typeof ToolsCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DiscoverRoute: DiscoverRoute,
+  ToolsCalculatorRoute: ToolsCalculatorRoute,
+  ToolsColorConverterRoute: ToolsColorConverterRoute,
+  ToolsDateCalculatorRoute: ToolsDateCalculatorRoute,
+  ToolsImageConverterRoute: ToolsImageConverterRoute,
+  ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
+  ToolsPdfToolsRoute: ToolsPdfToolsRoute,
+  ToolsTextToolsRoute: ToolsTextToolsRoute,
+  ToolsUnitConverterRoute: ToolsUnitConverterRoute,
+  ToolsUrlShortenerRoute: ToolsUrlShortenerRoute,
+  ToolsWorldClockRoute: ToolsWorldClockRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
