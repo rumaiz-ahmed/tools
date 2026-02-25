@@ -1,38 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { CalculatorTool } from '@/tools/calculator';
 import { ArrowLeft } from 'lucide-react';
-import { useEffect } from 'react';
+import { AdContainer } from '@/components/adsterra-ad';
 
 export const Route = createFileRoute('/tools/calculator')({
   component: CalculatorPage,
 });
-
-// Adsterra Ad Component
-function AdContainer() {
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.async = true;
-    script.src =
-      'https://pl28795298.effectivegatecpm.com/624ee3b4a4d6c3a00b4dc1768a217df6/invoke.js';
-    script.setAttribute('data-cfasync', 'false');
-    document.head.appendChild(script);
-
-    return () => {
-      const existingScript = document.head.querySelector(
-        `script[src="${script.src}"]`,
-      );
-      if (existingScript) {
-        document.head.removeChild(existingScript);
-      }
-    };
-  }, []);
-
-  return (
-    <div className="my-6 flex justify-center">
-      <div id="container-624ee3b4a4d6c3a00b4dc1768a217df6" />
-    </div>
-  );
-}
 
 function CalculatorPage() {
   return (

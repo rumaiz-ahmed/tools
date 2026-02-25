@@ -1,22 +1,31 @@
-import { useEffect } from 'react';
-
-export default function AdContainer() {
-  useEffect(() => {
-    // Load the external script
-    const script = document.createElement('script');
-    script.src =
-      'https://pl28795298.effectivegatecpm.com/624ee3b4a4d6c3a00b4dc1768a217df6/invoke.js';
-    script.async = true;
-    script.setAttribute('data-cfasync', 'false');
-    document.body.appendChild(script);
-
-    return () => {
-      // Cleanup: remove script if component unmounts
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, []);
-
-  return <div id="container-624ee3b4a4d6c3a00b4dc1768a217df6"></div>;
+interface AdContainerProps {
+  /** Unique identifier for this ad placement */
+  id?: string;
 }
+
+export function AdContainer({ id }: AdContainerProps) {
+  // The AdSterra script is loaded globally in __root.tsx
+  // This component just renders the container div where the ad will be displayed
+  // The container ID format must match what the AdSterra script expects
+  const containerId = id
+    ? `container-${id}`
+    : 'container-624ee3b4a4d6c3a00b4dc1768a217df6';
+
+  return (
+    <div className="my-6 flex justify-center">
+      <div
+        id={containerId}
+        className="ad-container"
+        style={{
+          minWidth: '320px',
+          minHeight: '50px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      />
+    </div>
+  );
+}
+
+export default AdContainer;
