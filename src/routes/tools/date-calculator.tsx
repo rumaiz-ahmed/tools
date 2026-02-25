@@ -1,11 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router"
-import { ArrowLeft } from "lucide-react"
-import { DateCalculatorTool } from "@/tools/date-calculator"
-import { AdsterraAd } from "@/components/adsterra-ad"
+import { createFileRoute, Link } from '@tanstack/react-router';
+import { ArrowLeft } from 'lucide-react';
+import { DateCalculatorTool } from '@/tools/date-calculator';
+import AdContainer from '@/components/adsterra-ad';
 
-export const Route = createFileRoute("/tools/date-calculator")({
+export const Route = createFileRoute('/tools/date-calculator')({
   component: DateCalculatorPage,
-})
+});
 
 function DateCalculatorPage() {
   return (
@@ -21,11 +21,11 @@ function DateCalculatorPage() {
           </Link>
         </div>
       </div>
-      <AdsterraAd />
+      <AdContainer />
       <div className="max-w-6xl mx-auto px-6 py-8">
         <DateCalculatorTool />
       </div>
-      <AdsterraAd />
+      <AdContainer />
     </div>
-  )
+  );
 }

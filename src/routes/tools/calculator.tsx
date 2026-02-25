@@ -8,7 +8,7 @@ export const Route = createFileRoute('/tools/calculator')({
 });
 
 // Adsterra Ad Component
-function AdsterraAd() {
+function AdContainer() {
   useEffect(() => {
     const script = document.createElement('script');
     script.async = true;
@@ -51,7 +51,7 @@ function CalculatorPage() {
       </div>
 
       {/* Ad */}
-      <AdsterraAd />
+      <AdContainer />
 
       {/* Tool */}
       <div className="container mx-auto px-4 py-4">
@@ -59,7 +59,7 @@ function CalculatorPage() {
       </div>
 
       {/* Ad */}
-      <AdsterraAd />
+      <AdContainer />
     </div>
   );
 }
