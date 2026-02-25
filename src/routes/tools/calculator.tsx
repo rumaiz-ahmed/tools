@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { CalculatorTool } from '@/tools/calculator';
 import { ArrowLeft } from 'lucide-react';
-import { AdContainer } from '@/components/adsterra-ad';
 
 export const Route = createFileRoute('/tools/calculator')({
   component: CalculatorPage,
@@ -23,16 +22,10 @@ function CalculatorPage() {
         </div>
       </div>
 
-      {/* Ad */}
-      <AdContainer />
-
       {/* Tool */}
       <div className="container mx-auto px-4 py-4">
         <CalculatorTool />
       </div>
-
-      {/* Ad */}
-      <AdContainer />
     </div>
   );
 }

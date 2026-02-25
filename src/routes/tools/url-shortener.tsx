@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft } from 'lucide-react';
 import { URLShortenerTool } from '@/tools/url-shortener';
-import { AdContainer } from '@/components/adsterra-ad';
 
 export const Route = createFileRoute('/tools/url-shortener')({
   component: URLShortenerPage,
@@ -21,11 +20,9 @@ function URLShortenerPage() {
           </Link>
         </div>
       </div>
-      <AdContainer />
       <div className="max-w-6xl mx-auto px-6 py-8">
         <URLShortenerTool />
       </div>
-      <AdContainer />
     </div>
   );
 }

@@ -63,13 +63,6 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: schemaData }}
         />
-        {/* Adsterra Ad Script - Load globally */}
-        <script
-          async
-          defer
-          src="https://pl28795298.effectivegatecpm.com/624ee3b4a4d6c3a00b4dc1768a217df6/invoke.js"
-          data-cfasync="false"
-        />
       </head>
       <body className="antialiased">
         <TooltipProvider>{children}</TooltipProvider>

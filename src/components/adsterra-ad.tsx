@@ -1,31 +1,67 @@
-interface AdContainerProps {
-  /** Unique identifier for this ad placement */
-  id?: string;
+import { useEffect, useId, type FC } from 'react';
+
+interface AdSenseProps {
+  /** Your Google AdSense publisher ID (ca-pub-XXXXXXXXXXXX) */
+  publisherId?: string;
+  /** The ad slot ID from AdSense (e.g., '1234567890') */
+  adSlot?: string;
+  /** Ad format (default: 'display') */
+  format?: 'display' | 'inarticle' | 'fluid';
+  /** Ad style */
+  className?: string;
 }
 
-export function AdContainer({ id }: AdContainerProps) {
-  // The AdSterra script is loaded globally in __root.tsx
-  // This component just renders the container div where the ad will be displayed
-  // The container ID format must match what the AdSterra script expects
-  const containerId = id
-    ? `container-${id}`
-    : 'container-624ee3b4a4d6c3a00b4dc1768a217df6';
+/**
+ * Google AdSense Ad Component
+ * 
+ * Usage:
+ * 1. Get your publisher ID from https://adsense.google.com
+ * 2. Create ad units in AdSense dashboard
+ * 3. Pass your publisherId and adSlot to this component
+ * 
+ * Note: Ads will only show on production (not localhost)
+ */
+export const AdSenseAd: FC<AdSenseProps> = ({
+  publisherId = 'ca-pub-XXXXXXXXXXXX',
+  adSlot = '1234567890',
+  format = 'display',
+  className = 'my-6',
+}) => {
+  const containerId = useId();
+
+  useEffect(() => {
+    try {
+      // @ts-expect-error - adsbygoogle is loaded from external script
+      const adsbygoogle = window.adsbygoogle || [];
+      adsbygoogle.push({});
+    } catch (e) {
+      // AdBlock or other issues - silently fail
+      console.warn('AdSense could not load:', e);
+    }
+  }, []);
 
   return (
-    <div className="my-6 flex justify-center">
-      <div
-        id={containerId}
-        className="ad-container"
+    <div className={`flex justify-center ${className}`}>
+      <ins
+        id={`adsense-${containerId.replace(/:/g, '-')}`}
+        className="adsbygoogle"
         style={{
+          display: 'block',
           minWidth: '320px',
           minHeight: '50px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
         }}
+        data-ad-client={publisherId}
+        data-ad-slot={adSlot}
+        data-ad-format={format}
+        data-full-width-responsive="true"
       />
     </div>
   );
-}
+};
 
-export default AdContainer;
+/**
+ * @deprecated Use AdSenseAd instead. Kept for backwards compatibility.
+ */
+export const AdContainer = AdSenseAd;
+
+export default AdSenseAd;

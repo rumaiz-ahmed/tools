@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft } from 'lucide-react';
 import { ColorConverterTool } from '@/tools/color-converter';
-import { AdContainer } from '@/components/adsterra-ad';
 
 export const Route = createFileRoute('/tools/color-converter')({
   component: ColorConverterPage,
@@ -21,11 +20,9 @@ function ColorConverterPage() {
           </Link>
         </div>
       </div>
-      <AdContainer />
       <div className="max-w-6xl mx-auto px-6 py-8">
         <ColorConverterTool />
       </div>
-      <AdContainer />
     </div>
   );
 }

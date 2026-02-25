@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft } from 'lucide-react';
 import { UnitConverterTool } from '@/tools/unit-converter';
-import { AdContainer } from '@/components/adsterra-ad';
 
 export const Route = createFileRoute('/tools/unit-converter')({
   component: UnitConverterPage,
@@ -21,11 +20,9 @@ function UnitConverterPage() {
           </Link>
         </div>
       </div>
-      <AdContainer />
       <div className="max-w-6xl mx-auto px-6 py-8">
         <UnitConverterTool />
       </div>
-      <AdContainer />
     </div>
   );
 }

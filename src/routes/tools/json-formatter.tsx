@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft } from 'lucide-react';
 import { JSONFormatterTool } from '@/tools/json-formatter';
-import { AdContainer } from '@/components/adsterra-ad';
 
 export const Route = createFileRoute('/tools/json-formatter')({
   component: JSONFormatterPage,
@@ -21,11 +20,9 @@ function JSONFormatterPage() {
           </Link>
         </div>
       </div>
-      <AdContainer />
       <div className="max-w-6xl mx-auto px-6 py-8">
         <JSONFormatterTool />
       </div>
-      <AdContainer />
     </div>
   );
 }

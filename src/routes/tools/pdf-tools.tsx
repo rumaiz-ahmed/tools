@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft } from 'lucide-react';
 import { PDFToolsTool } from '@/tools/pdf-tools';
-import { AdContainer } from '@/components/adsterra-ad';
 
 export const Route = createFileRoute('/tools/pdf-tools')({
   component: PDFToolsPage,
@@ -21,11 +20,9 @@ function PDFToolsPage() {
           </Link>
         </div>
       </div>
-      <AdContainer />
       <div className="max-w-6xl mx-auto px-6 py-8">
         <PDFToolsTool />
       </div>
-      <AdContainer />
     </div>
   );
 }
