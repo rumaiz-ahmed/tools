@@ -1,9 +1,11 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Calculator as CalcIcon, History, Trash2 } from "lucide-react"
+import { useSupportModal } from "@/components/support-modal"
 
 type Operation = "+" | "-" | "×" | "÷" | "%" | "±"
 
@@ -24,6 +26,14 @@ const initialState: CalculatorState = {
 export function CalculatorTool() {
   const [state, setState] = useState<CalculatorState>(initialState)
   const [history, setHistory] = useState<string[]>([])
+  const { showSupport } = useSupportModal()
+
+  // Show support modal after 5 calculations
+  useEffect(() => {
+    if (history.length >= 5) {
+      showSupport()
+    }
+  }, [history.length, showSupport])
 
   const inputDigit = useCallback((digit: string) => {
     setState((prev) => {
@@ -180,83 +190,121 @@ export function CalculatorTool() {
   }, [])
 
   const buttons = [
-    { label: "C", action: clear, variant: "destructive" as const },
-    { label: "±", action: toggleSign, variant: "outline" as const },
-    { label: "%", action: percentage, variant: "outline" as const },
-    { label: "÷", action: () => performOperation("÷"), variant: "outline" as const },
-    { label: "7", action: () => inputDigit("7"), variant: "default" as const },
-    { label: "8", action: () => inputDigit("8"), variant: "default" as const },
-    { label: "9", action: () => inputDigit("9"), variant: "default" as const },
-    { label: "×", action: () => performOperation("×"), variant: "outline" as const },
-    { label: "4", action: () => inputDigit("4"), variant: "default" as const },
-    { label: "5", action: () => inputDigit("5"), variant: "default" as const },
-    { label: "6", action: () => inputDigit("6"), variant: "default" as const },
-    { label: "-", action: () => performOperation("-"), variant: "outline" as const },
-    { label: "1", action: () => inputDigit("1"), variant: "default" as const },
-    { label: "2", action: () => inputDigit("2"), variant: "default" as const },
-    { label: "3", action: () => inputDigit("3"), variant: "default" as const },
-    { label: "+", action: () => performOperation("+"), variant: "outline" as const },
-    { label: "0", action: () => inputDigit("0"), variant: "default" as const },
-    { label: ".", action: inputDecimal, variant: "default" as const },
-    { label: "=", action: calculate, variant: "secondary" as const },
+    { label: "C", action: clear, style: "destructive" as const },
+    { label: "±", action: toggleSign, style: "operator" as const },
+    { label: "%", action: percentage, style: "operator" as const },
+    { label: "÷", action: () => performOperation("÷"), style: "operator" as const },
+    { label: "7", action: () => inputDigit("7"), style: "number" as const },
+    { label: "8", action: () => inputDigit("8"), style: "number" as const },
+    { label: "9", action: () => inputDigit("9"), style: "number" as const },
+    { label: "×", action: () => performOperation("×"), style: "operator" as const },
+    { label: "4", action: () => inputDigit("4"), style: "number" as const },
+    { label: "5", action: () => inputDigit("5"), style: "number" as const },
+    { label: "6", action: () => inputDigit("6"), style: "number" as const },
+    { label: "-", action: () => performOperation("-"), style: "operator" as const },
+    { label: "1", action: () => inputDigit("1"), style: "number" as const },
+    { label: "2", action: () => inputDigit("2"), style: "number" as const },
+    { label: "3", action: () => inputDigit("3"), style: "number" as const },
+    { label: "+", action: () => performOperation("+"), style: "operator" as const },
+    { label: "0", action: () => inputDigit("0"), style: "number" as const },
+    { label: ".", action: inputDecimal, style: "number" as const },
+    { label: "=", action: calculate, style: "equals" as const },
   ]
 
+  const getButtonClass = (style: string) => {
+    switch (style) {
+      case "destructive":
+        return "bg-red-600 hover:bg-red-700 text-white border-red-700"
+      case "operator":
+        return "bg-zinc-700 hover:bg-zinc-600 text-white border-zinc-600"
+      case "number":
+        return "bg-zinc-800 hover:bg-zinc-700 text-white border-zinc-700"
+      case "equals":
+        return "bg-white hover:bg-zinc-100 text-black border-white font-bold"
+      default:
+        return "bg-zinc-800 hover:bg-zinc-700 text-white border-zinc-700"
+    }
+  }
+
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            Calculator
-            <Badge variant="secondary">Basic</Badge>
-          </CardTitle>
+    <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+      <Card className="bg-white/[0.02] border-white/5">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-3 text-white">
+              <div className="p-2 rounded-lg bg-white/5">
+                <CalcIcon className="w-5 h-5" />
+              </div>
+              Calculator
+            </CardTitle>
+            <Badge variant="secondary" className="bg-white/10 text-white/70 border-0">
+              Basic
+            </Badge>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="bg-muted rounded-lg p-4 mb-4 text-right">
-            <div className="text-sm text-muted-foreground h-6">
+          {/* Display */}
+          <div className="bg-black/40 rounded-xl p-5 mb-5 border border-white/5">
+            <div className="text-sm text-white/40 h-6 font-mono">
               {state.previousValue} {state.operation}
             </div>
-            <div className="text-4xl font-bold truncate">
+            <div className="text-5xl font-bold truncate font-mono text-white mt-1">
               {state.display}
             </div>
           </div>
-          <div className="grid grid-cols-4 gap-2">
+          
+          {/* Buttons */}
+          <div className="grid grid-cols-4 gap-2.5">
             {buttons.map((btn, index) => (
-              <Button
+              <button
                 key={index}
-                variant={btn.variant}
-                size="lg"
                 onClick={btn.action}
-                className="h-14 text-lg font-semibold"
+                className={`h-14 text-lg font-semibold transition-all duration-200 hover:scale-105 rounded-lg border ${getButtonClass(btn.style)}`}
               >
                 {btn.label}
-              </Button>
+              </button>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            History
+      {/* History Panel */}
+      <Card className="bg-white/[0.02] border-white/5">
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-3 text-white">
+              <div className="p-2 rounded-lg bg-white/5">
+                <History className="w-5 h-5" />
+              </div>
+              History
+            </CardTitle>
             {history.length > 0 && (
-              <Button variant="ghost" size="sm" onClick={clearHistory}>
-                Clear
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={clearHistory}
+                className="text-white/40 hover:text-white/70 hover:bg-white/5"
+              >
+                <Trash2 className="w-4 h-4" />
               </Button>
             )}
-          </CardTitle>
+          </div>
         </CardHeader>
         <CardContent>
           {history.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-8">
-              No calculations yet
-            </p>
+            <div className="text-center py-12">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
+                <CalcIcon className="w-8 h-8 text-white/20" />
+              </div>
+              <p className="text-sm text-white/40">No calculations yet</p>
+              <p className="text-xs text-white/20 mt-1">Start calculating!</p>
+            </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2 max-h-[400px] overflow-y-auto">
               {history.map((entry, index) => (
                 <div
                   key={index}
-                  className="text-sm p-2 bg-muted rounded truncate font-mono"
+                  className="text-sm p-3 bg-white/5 rounded-lg truncate font-mono text-white/70 border border-white/5"
                 >
                   {entry}
                 </div>

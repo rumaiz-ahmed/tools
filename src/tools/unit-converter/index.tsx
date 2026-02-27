@@ -4,12 +4,14 @@ import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ArrowRightLeft, Scale, Thermometer, Ruler, Droplets, Timer } from "lucide-react"
+import { useSupportModal } from "@/components/support-modal"
 
 type Category = "length" | "weight" | "temperature" | "volume" | "time"
 
-const conversions: Record<Category, { from: string; to: string; factor: number }[]> = {
+const conversions: Record<Category, { from: string; to: string; factor: number; special?: string }[]> = {
   length: [
     { from: "meter", to: "kilometer", factor: 0.001 },
     { from: "kilometer", to: "meter", factor: 1000 },
@@ -92,6 +94,7 @@ export function UnitConverterTool() {
   const [fromUnit, setFromUnit] = useState("meter")
   const [toUnit, setToUnit] = useState("kilometer")
   const [result, setResult] = useState<string | null>(null)
+  const { showSupport } = useSupportModal()
 
   const convert = () => {
     const numValue = parseFloat(value)
@@ -100,7 +103,6 @@ export function UnitConverterTool() {
     let converted: number
 
     if (category === "temperature") {
-      // Special handling for temperature
       if (fromUnit === "celsius" && toUnit === "fahrenheit") {
         converted = (numValue * 9/5) + 32
       } else if (fromUnit === "fahrenheit" && toUnit === "celsius") {
@@ -117,7 +119,6 @@ export function UnitConverterTool() {
       if (conversion) {
         converted = numValue * conversion.factor
       } else {
-        // Convert to base unit first, then to target
         const toBase = conversions[category].find(c => c.from === fromUnit && c.to === units[category][0])
         const fromBase = conversions[category].find(c => c.from === units[category][0] && c.to === toUnit)
         if (toBase && fromBase) {
@@ -129,6 +130,7 @@ export function UnitConverterTool() {
     }
 
     setResult(converted.toLocaleString(undefined, { maximumFractionDigits: 10 }))
+    showSupport()
   }
 
   const swap = () => {
@@ -139,54 +141,55 @@ export function UnitConverterTool() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <Card>
+      <Card className="bg-white/[0.02] border-white/5">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-white">
             <ArrowRightLeft className="h-5 w-5" />
             Unit Converter
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Category */}
           <div className="space-y-2">
-            <Label>Category</Label>
+            <Label className="text-white/60">Category</Label>
             <div className="grid grid-cols-5 gap-2">
               {(Object.keys(units) as Category[]).map((cat) => (
-                <Button
+                <button
                   key={cat}
-                  variant={category === cat ? "default" : "outline"}
                   onClick={() => {
                     setCategory(cat)
                     setFromUnit(units[cat][0])
                     setToUnit(units[cat][1])
                     setResult(null)
                   }}
-                  className="gap-2"
+                  className={`p-3 rounded-lg border transition-all ${
+                    category === cat 
+                      ? "bg-white text-black border-white" 
+                      : "bg-zinc-800 text-white/60 hover:text-white hover:bg-zinc-700 border-zinc-700"
+                  }`}
                 >
                   {icons[cat]}
-                </Button>
+                </button>
               ))}
             </div>
           </div>
 
-          {/* From */}
           <div className="space-y-2">
-            <Label>From</Label>
+            <Label className="text-white/60">From</Label>
             <div className="flex gap-2">
               <Input
                 type="number"
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 placeholder="Enter value"
-                className="flex-1"
+                className="flex-1 bg-white/5 border-white/10 text-white placeholder:text-white/30"
               />
               <Select value={fromUnit} onValueChange={setFromUnit}>
-                <SelectTrigger className="w-[150px]">
+                <SelectTrigger className="w-[150px] bg-white/5 border-white/10 text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-black border-white/10">
                   {units[category].map((unit) => (
-                    <SelectItem key={unit} value={unit}>
+                    <SelectItem key={unit} value={unit} className="focus:bg-white/10 focus:text-white">
                       {unit.charAt(0).toUpperCase() + unit.slice(1)}
                     </SelectItem>
                   ))}
@@ -195,23 +198,21 @@ export function UnitConverterTool() {
             </div>
           </div>
 
-          {/* Swap */}
           <div className="flex justify-center">
-            <Button variant="outline" size="icon" onClick={swap}>
+            <button onClick={swap} className="p-3 bg-zinc-700 text-white/60 hover:text-white hover:bg-zinc-600 rounded-lg border border-zinc-600">
               <ArrowRightLeft className="h-4 w-4" />
-            </Button>
+            </button>
           </div>
 
-          {/* To */}
           <div className="space-y-2">
-            <Label>To</Label>
+            <Label className="text-white/60">To</Label>
             <Select value={toUnit} onValueChange={setToUnit}>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-white/5 border-white/10 text-white">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-black border-white/10">
                 {units[category].map((unit) => (
-                  <SelectItem key={unit} value={unit}>
+                  <SelectItem key={unit} value={unit} className="focus:bg-white/10 focus:text-white">
                     {unit.charAt(0).toUpperCase() + unit.slice(1)}
                   </SelectItem>
                 ))}
@@ -219,16 +220,14 @@ export function UnitConverterTool() {
             </Select>
           </div>
 
-          {/* Convert Button */}
-          <Button onClick={convert} className="w-full">
+          <button onClick={convert} className="w-full px-4 py-3 bg-white text-black hover:bg-zinc-100 rounded-lg font-medium">
             Convert
-          </Button>
+          </button>
 
-          {/* Result */}
           {result && (
-            <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
-              <Label className="text-sm text-muted-foreground">Result:</Label>
-              <p className="text-2xl font-bold mt-1">
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <Label className="text-sm text-white/60">Result:</Label>
+              <p className="text-2xl font-bold mt-1 text-white">
                 {result} {toUnit}
               </p>
             </div>

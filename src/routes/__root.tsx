@@ -2,6 +2,7 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { SupportModalProvider } from '@/components/support-modal';
 import appCss from '../styles.css?url';
 
 export const Route = createRootRoute({
@@ -65,7 +66,9 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
         />
       </head>
       <body className="antialiased">
-        <TooltipProvider>{children}</TooltipProvider>
+        <TooltipProvider>
+          <SupportModalProvider>{children}</SupportModalProvider>
+        </TooltipProvider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',
